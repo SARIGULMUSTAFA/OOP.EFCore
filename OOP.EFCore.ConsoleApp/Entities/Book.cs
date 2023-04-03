@@ -13,6 +13,8 @@ namespace OOP.EFCore.ConsoleApp.Entities
         public int BookId { get; set; }
     
       
-        public string Title { get; set; }   
+        public string Title { get; set; }
+
+        public DateTime CrratedDate { get; set; }
     }
 }
