@@ -9,10 +9,10 @@ namespace OOP.EFCore.ConsoleApp.Entities
 {
     public class Book
     {
-        [Key]
+    
         public int BookId { get; set; }
-        [Required]
-        [MaxLength(50)]
-        public string? Title { get; set; }   
+    
+      
+        public string Title { get; set; }   
     }
 }
