@@ -13,12 +13,13 @@ namespace OOP.EFCore.ConsoleApp.DAL
     public class BookappDbContext:DbContext
     {
 
-
-        public DbSet<Book> Books { get; set; } 
+        public DbSet<Book> Categories { get; set; }
+        public DbSet<Book> Books { get; set; }
+       
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer("Data Source=TOKAT153;Initial Catalog=BookAppDb;Integrated Security = SSPI; MultipleActiveResultSets = True");
+            //optionsBuilder.UseSqlServer("Data Source=TOKAT153;Initial Catalog=BookAppDb2;Integrated Security = SSPI; MultipleActiveResultSets = True");
 
             optionsBuilder.UseSqlServer("Server=TOKAT153;Database=BookAppDb;Integrated Security = SSPI; MultipleActiveResultSets = True");
 
@@ -28,6 +29,7 @@ namespace OOP.EFCore.ConsoleApp.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new BookMap());
+            modelBuilder.ApplyConfiguration(new CategoryMap());
         }
 
     }

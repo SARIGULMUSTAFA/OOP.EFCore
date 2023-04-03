@@ -2,7 +2,7 @@
 
 namespace OOP.EFCore.ConsoleApp.Migrations
 {
-    public partial class ss : Migration
+    public partial class yeni3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

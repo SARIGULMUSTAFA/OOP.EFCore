@@ -11,8 +11,14 @@ namespace OOP.EFCore.ConsoleApp.Entities
     {
     
         public int BookId { get; set; }
-    
-      
+
+
+        public int CategoryId { get; set; }
+
+        //simple Navigation Property
+        public Category Category { get; set; }
+
+
         public string Title { get; set; }
 
         public DateTime CrratedDate { get; set; }
