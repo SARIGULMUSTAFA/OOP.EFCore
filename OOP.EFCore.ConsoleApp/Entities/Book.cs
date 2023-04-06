@@ -18,7 +18,6 @@ namespace OOP.EFCore.ConsoleApp.Entities
         //simple Navigation Property
         public Category Category { get; set; }
 
-
         public string Title { get; set; }
 
         public DateTime CreatedDate { get; set; }
@@ -28,5 +27,9 @@ namespace OOP.EFCore.ConsoleApp.Entities
 
 
         public BookDetail BookDetail { get; set; }
+
+        public List<BookAuthor> BookAuthors { get; set; }
     }
+
+
 }

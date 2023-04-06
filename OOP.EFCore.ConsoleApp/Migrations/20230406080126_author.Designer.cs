@@ -10,8 +10,8 @@ using OOP.EFCore.ConsoleApp.DAL;
 namespace OOP.EFCore.ConsoleApp.Migrations
 {
     [DbContext(typeof(BookappDbContext))]
-    [Migration("20230403141026_yeni3")]
-    partial class yeni3
+    [Migration("20230406080126_author")]
+    partial class author
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,47 @@ namespace OOP.EFCore.ConsoleApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.Author", b =>
+                {
+                    b.Property<int>("AuthorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Tarih")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.HasKey("AuthorId");
+
+                    b.ToTable("Authors");
+
+                    b.HasData(
+                        new
+                        {
+                            AuthorId = 1,
+                            FirstName = "Mustafa",
+                            LastName = "Sarıgül",
+                            Tarih = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            AuthorId = 2,
+                            FirstName = "Yusuf Eren ",
+                            LastName = "Sarıgül",
+                            Tarih = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
+                });
 
             modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.Book", b =>
                 {
@@ -31,10 +72,13 @@ namespace OOP.EFCore.ConsoleApp.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CrratedDate")
+                    b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -45,58 +89,102 @@ namespace OOP.EFCore.ConsoleApp.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Book");
+                    b.ToTable("Books");
 
                     b.HasData(
                         new
                         {
                             BookId = 1,
                             CategoryId = 1,
-                            CrratedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 0m,
                             Title = "Toprak Ana"
                         },
                         new
                         {
                             BookId = 2,
-                            CategoryId = 1,
-                            CrratedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CategoryId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 0m,
                             Title = "Gün Olur Asra Bedel"
                         },
                         new
                         {
                             BookId = 3,
-                            CategoryId = 1,
-                            CrratedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CategoryId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 0m,
                             Title = "Elveda Gülsarı"
                         },
                         new
                         {
                             BookId = 4,
                             CategoryId = 1,
-                            CrratedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 0m,
                             Title = "Erken Gelen Turnalar"
                         },
                         new
                         {
                             BookId = 5,
-                            CategoryId = 1,
-                            CrratedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CategoryId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 0m,
                             Title = "Dişi Kurdun Rüyaları"
                         },
                         new
                         {
                             BookId = 6,
-                            CategoryId = 1,
-                            CrratedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CategoryId = 3,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 0m,
                             Title = "Cemile"
                         },
                         new
                         {
                             BookId = 7,
                             CategoryId = 1,
-                            CrratedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 0m,
                             Title = "Yıldırım Sesli Manasçı"
                         });
+                });
+
+            modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.BookDetail", b =>
+                {
+                    b.Property<int>("BookDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ISSN")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("0000");
+
+                    b.Property<int>("Year")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1234);
+
+                    b.HasKey("BookDetailId");
+
+                    b.HasIndex("BookId")
+                        .IsUnique();
+
+                    b.ToTable("BookDetails");
                 });
 
             modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.Category", b =>
@@ -119,7 +207,7 @@ namespace OOP.EFCore.ConsoleApp.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
@@ -148,6 +236,23 @@ namespace OOP.EFCore.ConsoleApp.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.BookDetail", b =>
+                {
+                    b.HasOne("OOP.EFCore.ConsoleApp.Entities.Book", "Book")
+                        .WithOne("BookDetail")
+                        .HasForeignKey("OOP.EFCore.ConsoleApp.Entities.BookDetail", "BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+                });
+
+            modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.Book", b =>
+                {
+                    b.Navigation("BookDetail")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.Category", b =>

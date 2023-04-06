@@ -10,8 +10,8 @@ using OOP.EFCore.ConsoleApp.DAL;
 namespace OOP.EFCore.ConsoleApp.Migrations
 {
     [DbContext(typeof(BookappDbContext))]
-    [Migration("20230406062702_BookandbookdetailOnetoOneRelation")]
-    partial class BookandbookdetailOnetoOneRelation
+    [Migration("20230406082058_manytomany")]
+    partial class manytomany
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,47 @@ namespace OOP.EFCore.ConsoleApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.Author", b =>
+                {
+                    b.Property<int>("AuthorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Tarih")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.HasKey("AuthorId");
+
+                    b.ToTable("Authors");
+
+                    b.HasData(
+                        new
+                        {
+                            AuthorId = 1,
+                            FirstName = "Mustafa",
+                            LastName = "Sarıgül",
+                            Tarih = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            AuthorId = 2,
+                            FirstName = "Yusuf Eren ",
+                            LastName = "Sarıgül",
+                            Tarih = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
+                });
 
             modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.Book", b =>
                 {
@@ -48,7 +89,7 @@ namespace OOP.EFCore.ConsoleApp.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Book");
+                    b.ToTable("Books");
 
                     b.HasData(
                         new
@@ -62,7 +103,7 @@ namespace OOP.EFCore.ConsoleApp.Migrations
                         new
                         {
                             BookId = 2,
-                            CategoryId = 1,
+                            CategoryId = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Price = 0m,
                             Title = "Gün Olur Asra Bedel"
@@ -70,7 +111,7 @@ namespace OOP.EFCore.ConsoleApp.Migrations
                         new
                         {
                             BookId = 3,
-                            CategoryId = 1,
+                            CategoryId = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Price = 0m,
                             Title = "Elveda Gülsarı"
@@ -86,7 +127,7 @@ namespace OOP.EFCore.ConsoleApp.Migrations
                         new
                         {
                             BookId = 5,
-                            CategoryId = 1,
+                            CategoryId = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Price = 0m,
                             Title = "Dişi Kurdun Rüyaları"
@@ -94,7 +135,7 @@ namespace OOP.EFCore.ConsoleApp.Migrations
                         new
                         {
                             BookId = 6,
-                            CategoryId = 1,
+                            CategoryId = 3,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Price = 0m,
                             Title = "Cemile"
@@ -107,6 +148,28 @@ namespace OOP.EFCore.ConsoleApp.Migrations
                             Price = 0m,
                             Title = "Yıldırım Sesli Manasçı"
                         });
+                });
+
+            modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.BookAuthor", b =>
+                {
+                    b.Property<int>("BookAuthorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BookAuthorId");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("BookAuthors");
                 });
 
             modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.BookDetail", b =>
@@ -129,17 +192,21 @@ namespace OOP.EFCore.ConsoleApp.Migrations
 
                     b.Property<string>("ISSN")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("0000");
 
                     b.Property<int>("Year")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1234);
 
                     b.HasKey("BookDetailId");
 
                     b.HasIndex("BookId")
                         .IsUnique();
 
-                    b.ToTable("BookDetail");
+                    b.ToTable("BookDetails");
                 });
 
             modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.Category", b =>
@@ -162,7 +229,7 @@ namespace OOP.EFCore.ConsoleApp.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
@@ -193,6 +260,25 @@ namespace OOP.EFCore.ConsoleApp.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.BookAuthor", b =>
+                {
+                    b.HasOne("OOP.EFCore.ConsoleApp.Entities.Author", "Author")
+                        .WithMany("BookAuthors")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OOP.EFCore.ConsoleApp.Entities.Book", "Book")
+                        .WithMany("BookAuthors")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Book");
+                });
+
             modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.BookDetail", b =>
                 {
                     b.HasOne("OOP.EFCore.ConsoleApp.Entities.Book", "Book")
@@ -204,8 +290,15 @@ namespace OOP.EFCore.ConsoleApp.Migrations
                     b.Navigation("Book");
                 });
 
+            modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.Author", b =>
+                {
+                    b.Navigation("BookAuthors");
+                });
+
             modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.Book", b =>
                 {
+                    b.Navigation("BookAuthors");
+
                     b.Navigation("BookDetail")
                         .IsRequired();
                 });

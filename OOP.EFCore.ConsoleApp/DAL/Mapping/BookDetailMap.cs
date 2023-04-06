@@ -13,7 +13,7 @@ namespace OOP.EFCore.ConsoleApp.DAL.Mapping
 
             builder.Property(bd => bd.ISSN).IsRequired().HasDefaultValue("0000");
 
-            builder.Property(bd => bd.Year).HasDefaultValue(DateTime.Now);
+            builder.Property(bd => bd.Year).HasDefaultValue("1234");
 
 
             builder.HasOne(bd => bd.Book).WithOne(b => b.BookDetail).HasForeignKey<BookDetail>(bd => bd.BookId);
