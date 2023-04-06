@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace OOP.EFCore.ConsoleApp.DAL.Mapping
 {
-    public partial class BookMap : IEntityTypeConfiguration<Book>
+    public class BookMap : IEntityTypeConfiguration<Book>
     {
         public void Configure(EntityTypeBuilder<Book> builder)
         {
             builder.HasKey(b => b.BookId);
             builder.Property(b => b.Title).IsRequired().HasMaxLength(250);
-            builder.Property(b => b.CrratedDate).HasDefaultValueSql("GETDATE()");
+            builder.Property(b => b.CreatedDate).HasDefaultValueSql("GETDATE()");
             builder.HasData(
                 new Book { BookId = 1, Title = "Toprak Ana",CategoryId=1 },
                  new Book { BookId = 2, Title = "Gün Olur Asra Bedel", CategoryId = 1 },
@@ -27,7 +27,8 @@ namespace OOP.EFCore.ConsoleApp.DAL.Mapping
 
                 );
             //book tablosundaki siple navigation property  category tablosundaki  public ICollection<Book> Books { get; set; } book tablosundaki CategoriyId üzerinden  ile bire çok ilişkili
-            builder.HasOne(b => b.Category).WithMany(c => c.Books).HasForeignKey(b => b.CategoryId);
+            builder.HasOne(b => b.Category).WithMany(c => c.Books).HasForeignKey(b => b.CategoryId).OnDelete(DeleteBehavior.Cascade);
         }
     }
+
 }

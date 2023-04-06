@@ -21,6 +21,12 @@ namespace OOP.EFCore.ConsoleApp.Entities
 
         public string Title { get; set; }
 
-        public DateTime CrratedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
+
+
+        public decimal Price { get; set; }
+
+
+        public BookDetail BookDetail { get; set; }
     }
 }

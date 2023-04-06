@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OOP.EFCore.ConsoleApp.DAL;
 
 namespace OOP.EFCore.ConsoleApp.Migrations
 {
     [DbContext(typeof(BookappDbContext))]
-    partial class BookappDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230403141913_onetomany")]
+    partial class onetomany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,13 +31,10 @@ namespace OOP.EFCore.ConsoleApp.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime>("CrratedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -53,91 +52,51 @@ namespace OOP.EFCore.ConsoleApp.Migrations
                         {
                             BookId = 1,
                             CategoryId = 1,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 0m,
+                            CrratedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Toprak Ana"
                         },
                         new
                         {
                             BookId = 2,
                             CategoryId = 1,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 0m,
+                            CrratedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Gün Olur Asra Bedel"
                         },
                         new
                         {
                             BookId = 3,
                             CategoryId = 1,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 0m,
+                            CrratedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Elveda Gülsarı"
                         },
                         new
                         {
                             BookId = 4,
                             CategoryId = 1,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 0m,
+                            CrratedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Erken Gelen Turnalar"
                         },
                         new
                         {
                             BookId = 5,
                             CategoryId = 1,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 0m,
+                            CrratedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Dişi Kurdun Rüyaları"
                         },
                         new
                         {
                             BookId = 6,
                             CategoryId = 1,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 0m,
+                            CrratedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Cemile"
                         },
                         new
                         {
                             BookId = 7,
                             CategoryId = 1,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 0m,
+                            CrratedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Yıldırım Sesli Manasçı"
                         });
-                });
-
-            modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.BookDetail", b =>
-                {
-                    b.Property<int>("BookDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ISSN")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("BookDetailId");
-
-                    b.HasIndex("BookId")
-                        .IsUnique();
-
-                    b.ToTable("BookDetail");
                 });
 
             modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.Category", b =>
@@ -189,23 +148,6 @@ namespace OOP.EFCore.ConsoleApp.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.BookDetail", b =>
-                {
-                    b.HasOne("OOP.EFCore.ConsoleApp.Entities.Book", "Book")
-                        .WithOne("BookDetail")
-                        .HasForeignKey("OOP.EFCore.ConsoleApp.Entities.BookDetail", "BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-                });
-
-            modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.Book", b =>
-                {
-                    b.Navigation("BookDetail")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("OOP.EFCore.ConsoleApp.Entities.Category", b =>
